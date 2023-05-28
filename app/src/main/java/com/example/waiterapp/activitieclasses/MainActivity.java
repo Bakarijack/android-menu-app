@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //pending
+                registerRestaurant();
             }
         });
 
@@ -144,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registerRestaurant(){
-        String pass = registerResPassword.getText().toString();
-        String confPass = registerConfResPassword.getText().toString();
-        String resName = registerResName.getText().toString();
-        String resEmail = registerResEmail.getText().toString();
+        String pass = registerResPassword.getText().toString().trim();
+        String confPass = registerConfResPassword.getText().toString().trim();
+        String resName = registerResName.getText().toString().trim();
+        String resEmail = registerResEmail.getText().toString().trim();
 
         if (resName.isEmpty()){
             Toast.makeText(getApplicationContext(),"Restaurant name field is empty!",Toast.LENGTH_SHORT).show();
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (pass != confPass){
+        if (!pass.equals(confPass)){
             Toast.makeText(getApplicationContext(),"Passwords don't match!",Toast.LENGTH_SHORT).show();
             return;
         }
