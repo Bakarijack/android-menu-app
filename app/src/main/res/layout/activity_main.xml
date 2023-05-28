@@ -19,7 +19,7 @@
             android:layout_height="300dp"
             android:id="@+id/spinnerRel"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp">
 
@@ -142,18 +142,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
                         android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New? "
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="12sp"
+                            android:textColor="@color/abbey_black"/>
 
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/signupButton"
+                            android:id="@+id/registerLaunchButton"
                             style="?android:borderlessButtonStyle"
                             android:textAllCaps="false"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="0dp"
                             android:textColor="@color/abbey_black"
-                            android:text="New? create here!"/>
+                            android:text="create here!"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -166,7 +175,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:id="@+id/signupRel"
+            android:id="@+id/registerRel"
             android:gravity="center"
             android:visibility="gone"
             android:background="@drawable/background_card"
@@ -326,19 +335,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
                         android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Already registered? "
+                            android:textSize="12sp"
+                            android:textColor="@color/abbey_black"
+                            android:fontFamily="sans-serif-light"/>
 
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/registerLoginButton"
+                            android:id="@+id/loginLaunchButton"
                             style="?android:borderlessButtonStyle"
                             android:textAllCaps="false"
-                            android:padding="0dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="0dp"
                             android:textColor="@color/abbey_black"
-                            android:text="Already registered? login here!"/>
+                            android:text="login here!"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -348,13 +365,12 @@
         </RelativeLayout>
 
 <!--        table number setting-->
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:id="@+id/tableNoRel"
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@drawable/background_card"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp">
@@ -410,6 +426,26 @@
                             android:background="@drawable/rounde_outline"
                             />
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Next"
+                        android:textAllCaps="false"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:background="@drawable/rounde_outline"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/menuLaunchButton"
+                        android:backgroundTint="@color/abbey_black"/>
 
                 </LinearLayout>
 
