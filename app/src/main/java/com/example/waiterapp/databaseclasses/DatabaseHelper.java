@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table restaurant(restaurantId INTEGER primary key AUTOINCREMENT,restaurantName TEXT, restaurantEmail TEXT NOT NULL, restaurantPassword TEXT, tableNumber default null)");
+        sqLiteDatabase.execSQL("create table restaurant(restaurantId INTEGER primary key AUTOINCREMENT,restaurantName TEXT, restaurantEmail TEXT NOT NULL, restaurantPassword TEXT, tableNumber INTEGER default null)");
     }
 
     @Override
