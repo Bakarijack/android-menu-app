@@ -10,7 +10,7 @@ public class RestaurantDatabaseHelper extends DatabaseHelper{
     }
 
 
-    public boolean isAnyRestorantExist(){
+    public boolean isAnyRestaurantExist(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from restaurant",null);
 

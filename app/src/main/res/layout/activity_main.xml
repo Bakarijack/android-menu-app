@@ -168,7 +168,7 @@
             android:layout_height="500dp"
             android:id="@+id/signupRel"
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@drawable/background_card"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp">
@@ -347,7 +347,101 @@
 
         </RelativeLayout>
 
+<!--        table number setting-->
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/tableNoRel"
+            android:gravity="center"
+            android:visibility="visible"
+            android:background="@drawable/background_card"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/food"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Table number"
+                            android:textColor="@color/abbey_black"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="12sp"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:drawableLeft="@drawable/ic_action_table"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:textSize="18sp"
+                            android:id="@+id/tableNumber"
+                            android:background="@drawable/rounde_outline"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tableNoSkipButton"
+                            style="?android:borderlessButtonStyle"
+                            android:textAllCaps="false"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/abbey_black"
+                            android:text="Skip"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
