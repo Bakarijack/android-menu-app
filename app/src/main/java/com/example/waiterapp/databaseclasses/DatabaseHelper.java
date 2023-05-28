@@ -16,11 +16,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table restorant(restorantId INTEGER primary key AUTOINCREMENT,restorantName TEXT, restrantEmail TEXT NOT NULL, restorantPassword TEXT, tableNumber default null)");
+        sqLiteDatabase.execSQL("create table restaurant(restaurantId INTEGER primary key AUTOINCREMENT,restaurantName TEXT, restaurantEmail TEXT NOT NULL, restaurantPassword TEXT, tableNumber default null)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("drop table if exists restorant");
+        sqLiteDatabase.execSQL("drop table if exists restaurant");
     }
 }
