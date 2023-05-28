@@ -38,6 +38,5 @@ public class RestaurantDatabaseHelper extends DatabaseHelper{
         }else {
             return true;
         }
-
     }
 }

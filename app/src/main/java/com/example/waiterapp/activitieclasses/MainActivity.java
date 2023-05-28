@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.waiterapp.R;
 import com.example.waiterapp.databaseclasses.RestaurantDatabaseHelper;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     // views ana viewGroup
     private RelativeLayout spinnerRel, loginRel,registerRel,tableNoRel;
     private Button loginButton, registerLaunchButton, registerButton,tableNoSkipButton, loginLaunchButton,menuLaunchButton;
-
+    private EditText registerResName,registerResEmail,registerResPassword,registerConfResPassword;
 
     // Database
     private RestaurantDatabaseHelper restaurantDatabaseHelper;
@@ -67,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         loginLaunchButton = (Button) findViewById(R.id.loginLaunchButton);
         tableNoSkipButton = (Button) findViewById(R.id.tableNoSkipButton);
         menuLaunchButton = (Button) findViewById(R.id.menuLaunchButton);
+
+        registerResName = (EditText) findViewById(R.id.registerResName);
+        registerResEmail = (EditText) findViewById(R.id.registerResEmail);
+        registerResPassword = (EditText) findViewById(R.id.registerResPassword);
+        registerConfResPassword = (EditText) findViewById(R.id.registerConfResPassword);
 
         restaurantDatabaseHelper = new RestaurantDatabaseHelper(MainActivity.this);
 
@@ -134,5 +141,40 @@ public class MainActivity extends AppCompatActivity {
         Intent menuIntent = new Intent(MainActivity.this, Menu.class);
         startActivity(menuIntent);
         finish();
+    }
+
+    public void registerRestaurant(){
+        String pass = registerResPassword.getText().toString();
+        String confPass = registerConfResPassword.getText().toString();
+        String resName = registerResName.getText().toString();
+        String resEmail = registerResEmail.getText().toString();
+
+        if (resName.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Restaurant name field is empty!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (resEmail.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Restaurant email field is empty!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (pass.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Password field is empty!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (confPass.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Confirm Password field is empty!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (pass != confPass){
+            Toast.makeText(getApplicationContext(),"Passwords don't match!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
     }
 }
