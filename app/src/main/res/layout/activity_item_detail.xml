@@ -92,13 +92,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
                     android:padding="5dp"
-                    android:text="The main goal of number theory is to discover interesting and unexpected rela-
-tionships between different sorts of numbers and to prove that these relationships
-are true.
+                    android:text="First of all, chicken burgers are healthier than regular burgers. They're made with lean meat and most vegetables, so they're packed with nutrients and haven't got any added sugar or fat. Plus, they taste great!
 
-The main goal of number theory is to discover interesting and unexpected rela-
-tionships between different sorts of numbers and to prove that these relationships
-are true."
+                    Second of all, chicken burgers are versatile."
                     android:textColor="@color/silver_grey"
                     android:id="@+id/itemInfo"/>
             </LinearLayout>
