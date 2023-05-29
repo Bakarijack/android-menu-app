@@ -1,8 +1,10 @@
 package com.example.waiterapp.activitieclasses;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,13 @@ import android.widget.Toast;
 
 import com.example.waiterapp.R;
 import com.example.waiterapp.databaseclasses.RestaurantDatabaseHelper;
+import com.example.waiterapp.dataclasses.RestaurantData;
+import com.example.waiterapp.helpers.AESCrypt;
+import com.example.waiterapp.helpers.EmailVerify;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -170,11 +179,61 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        if (!EmailVerify.isEmailValid(resEmail)){
+            Toast.makeText(this, "Email not valid !", Toast.LENGTH_SHORT).show();
+        }
+
+
         if (!pass.equals(confPass)){
             Toast.makeText(getApplicationContext(),"Passwords don't match!",Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (pass.length() < 8){
+            Toast.makeText(this, "Password must be 8 digits character", Toast.LENGTH_SHORT).show();
+        }
 
+        RestaurantData restaurantData = new RestaurantData(resName,resEmail, pass);
+        uploadData(restaurantData);
+    }
+
+
+    public void showLoginAfterRegistration(){
+        registerRel.setVisibility(View.INVISIBLE);
+        loginRel.setVisibility(View.VISIBLE);
+    }
+
+    public void uploadData(RestaurantData restaurantData){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_layout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        FirebaseDatabase.getInstance().getReference("Restaurants").child(restaurantData.getRestaurantName()).child("info")
+                .setValue(restaurantData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isComplete()){
+                            Toast.makeText(MainActivity.this, "Restaurant created successfully", Toast.LENGTH_SHORT).show();
+                            boolean result = restaurantDatabaseHelper.isRestaurantDataInserted(restaurantData.getRestaurantName(),restaurantData.getRestaurantEmail(),restaurantData.getRestaurantPassword());
+
+                            if (result){
+                                Toast.makeText(MainActivity.this, "Data saved in SQLite db", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(MainActivity.this, "Failed to save in SQLite db", Toast.LENGTH_SHORT).show();
+                            }
+                            showLoginAfterRegistration();
+
+                            finish();
+                            dialog.dismiss();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

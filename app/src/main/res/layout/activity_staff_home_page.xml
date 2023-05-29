@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:background="@color/dark_white"
+    tools:context=".activitieclasses.StaffHomePage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/actionBarRel"
+        android:layout_marginTop="0dp">
+
+        <ImageButton
+            android:id="@+id/staffHomeButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/menu_button_back"
+            android:src="@drawable/ic_baseline_menu_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="Mimo Cafe"
+            android:textAlignment="center"
+            android:textColor="@color/smoky_black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_height="40dp">
+
+            <ImageButton
+                android:id="@+id/notificationButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/transparent2"
+                android:clickable="true"
+                android:src="@drawable/ic_action_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/cartCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/message_label"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@+id/notificationButton"
+                app:layout_constraintEnd_toEndOf="@+id/notificationButton"
+                app:layout_constraintHorizontal_bias="0.803"
+                app:layout_constraintStart_toStartOf="@+id/notificationButton" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:id="@+id/container"
+        android:layout_marginBottom="70dp"
+        android:layout_alignParentBottom="true"/>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/homeNavigation"
+        app:menu="@menu/bottom_nav"
+        app:itemIconTint="@color/bottom_van_color"
+        app:itemTextColor="@color/bottom_van_color"
+        android:background="@drawable/bottom_nav_back"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

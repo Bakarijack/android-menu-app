@@ -22,14 +22,13 @@ public class RestaurantDatabaseHelper extends DatabaseHelper{
         }
     }
 
-    public boolean isRestaurantDataInserted(String restaurantName, String restaurantEmail, String restaurantPassword, int tableNumber){
+    public boolean isRestaurantDataInserted(String restaurantName, String restaurantEmail, String restaurantPassword){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("restaurantName",restaurantName);
         contentValues.put("restaurantEmail",restaurantEmail);
         contentValues.put("restaurantPassword",restaurantPassword);
-        contentValues.put("tableNumber", tableNumber);
 
         long result = db.insert("restaurant",null,contentValues);
 

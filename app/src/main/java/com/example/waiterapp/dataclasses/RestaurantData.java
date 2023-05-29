@@ -4,13 +4,21 @@ public class RestaurantData {
     private String restaurantName;
     private String restaurantEmail;
     private String restaurantPassword;
+    private Integer restaurantTableNumber;
 
     public RestaurantData(){}
 
-    public RestaurantData(String restaurantName, String restaurantEmail, String restaurantPassword) {
+    public RestaurantData(String restaurantName, String restaurantEmail, String restaurantPassword, Integer restaurantTableNumber) {
         this.restaurantName = restaurantName;
         this.restaurantEmail = restaurantEmail;
         this.restaurantPassword = restaurantPassword;
+        this.restaurantTableNumber = restaurantTableNumber;
+    }
+
+    public RestaurantData(String resName, String resEmail, String pass) {
+        this.restaurantName = resName;
+        this.restaurantEmail = resEmail;
+        this.restaurantPassword = pass;
     }
 
     public String getRestaurantName() {
@@ -35,5 +43,13 @@ public class RestaurantData {
 
     public void setRestaurantPassword(String restaurantPassword) {
         this.restaurantPassword = restaurantPassword;
+    }
+
+    public Integer getRestaurantTableNumber() {
+        return restaurantTableNumber;
+    }
+
+    public void setRestaurantTableNumber(int restaurantTableNumber) {
+        this.restaurantTableNumber = restaurantTableNumber;
     }
 }
