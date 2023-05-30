@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,6 +28,8 @@ public class AddProduct extends AppCompatActivity {
 
     private Uri uri;
 
+    private String[] initialCategoryItems = {"Vegetables","Fruits","Grains","Meat and Poultry","Seafood","Dairy foods","Eggs","Fast foods"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,11 @@ public class AddProduct extends AppCompatActivity {
         categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
         foodDesc = (EditText) findViewById(R.id.foodDesc);
         createButton = (Button) findViewById(R.id.createButton);
+
+
+        ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,initialCategoryItems);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(ad);
 
         photoFab.setOnClickListener(new View.OnClickListener() {
             @Override
