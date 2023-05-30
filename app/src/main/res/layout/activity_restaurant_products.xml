@@ -22,11 +22,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/productHeaderRel"
             android:layout_alignParentTop="true">
             <ImageButton
                 android:id="@+id/menuButtonfromProducts"
@@ -35,10 +38,32 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
                 android:background="@drawable/menu_button_back"
                 android:src="@drawable/ic_action_back_arrow" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchRel"
+            android:layout_below="@id/productHeaderRel">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchField"
+                android:layout_width="300dp"
+                android:layout_height="43dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/search_background"
+                android:focusable="false"
+                app:closeIcon="@drawable/ic_baseline_clear_24"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search..."
+                app:searchHintIcon="@null"
+                app:searchIcon="@drawable/ic_baseline_search_24" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 
