@@ -45,7 +45,7 @@ public class RestaurantProducts extends AppCompatActivity {
         menuButtonfromProducts = (ImageButton) findViewById(R.id.menuButtonfromProducts);
         productsRecyclerView = (RecyclerView) findViewById(R.id.productsRecyclerView);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(RestaurantProducts.this,1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(RestaurantProducts.this,2);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantProducts.this);

@@ -1,9 +1,14 @@
 package com.example.waiterapp.activitieclasses;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -81,6 +86,21 @@ public class AddProduct extends AppCompatActivity {
         restaurantDatabaseHelper =  new RestaurantDatabaseHelper(AddProduct.this);
         productDatabaseHelper = new ProductDatabaseHelper(AddProduct.this);
 
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            uri = data.getData();
+                            foodImage.setImageURI(uri);
+                        }else {
+                            Toast.makeText(AddProduct.this, "No image selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
         ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,initialCategoryItems);
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(ad);
@@ -100,7 +120,10 @@ public class AddProduct extends AppCompatActivity {
         photoFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imagePickerAction();
+                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+
             }
         });
 
@@ -199,18 +222,18 @@ public class AddProduct extends AppCompatActivity {
                 });
     }
 
-    public void imagePickerAction(){
-        ImagePicker.with(this)
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .start();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        uri = data.getData();
-        foodImage.setImageURI(uri);
-    }
+//    public void imagePickerAction(){
+//        ImagePicker.with(this)
+//                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+//                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+//                .start();
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        uri = data.getData();
+//        foodImage.setImageURI(uri);
+//    }
 
 }

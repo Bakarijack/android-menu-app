@@ -187,6 +187,7 @@
                         android:id="@+id/foodDesc"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:padding="10dp"
                         android:inputType="text|textMultiLine"
                         android:background="@drawable/rounde_outline"
                         android:gravity="top"/>

@@ -1,6 +1,7 @@
 package com.example.waiterapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.waiterapp.R;
+import com.example.waiterapp.activitieclasses.ProductDetail;
 import com.example.waiterapp.dataclasses.ProductData;
 
 import java.util.List;
@@ -42,6 +44,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<MyProductViewHolder> {
         holder.recProductName.setText(productDataList.get(position).getProductName());
         holder.recProductCount.setText(String.valueOf(productDataList.get(position).getProductQuantity()));
 
+        holder.recProductAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetail.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
