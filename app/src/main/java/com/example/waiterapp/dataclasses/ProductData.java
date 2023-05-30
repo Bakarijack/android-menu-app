@@ -7,6 +7,10 @@ public class ProductData {
     private String productCategory;
     private String productDescription;
     private String productImageUri;
+    private String key;
+
+
+    public ProductData(){}
 
     public ProductData(String productName, String productPrice, Integer productQuantity, String productCategory, String productDescription, String productImageUri) {
         this.productName = productName;
@@ -63,6 +67,14 @@ public class ProductData {
 
     public void setProductImageUri(String productImageUri) {
         this.productImageUri = productImageUri;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
 
