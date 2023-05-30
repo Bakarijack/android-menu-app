@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.waiterapp.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -17,6 +20,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddProduct extends AppCompatActivity {
     private FloatingActionButton photoFab;
     private CircleImageView foodImage;
+    private EditText foodName,foodPrice,foodQuantity,foodCategory,foodDesc;
+    private Spinner categorySpinner;
+    private Button createButton;
 
 
     private Uri uri;
@@ -28,6 +34,13 @@ public class AddProduct extends AppCompatActivity {
 
         photoFab = (FloatingActionButton) findViewById(R.id.photoFab);
         foodImage = (CircleImageView) findViewById(R.id.foodImage);
+        foodName = (EditText) findViewById(R.id.foodName);
+        foodPrice = (EditText) findViewById(R.id.foodPrice);
+        foodQuantity = (EditText) findViewById(R.id.foodQuantity);
+        foodCategory = (EditText) findViewById(R.id.foodCategory);
+        categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        foodDesc = (EditText) findViewById(R.id.foodDesc);
+        createButton = (Button) findViewById(R.id.createButton);
 
         photoFab.setOnClickListener(new View.OnClickListener() {
             @Override
