@@ -45,11 +45,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchRel"
+            android:id="@+id/searchProductRel"
             android:layout_below="@id/productHeaderRel">
 
             <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchField"
+                android:id="@+id/searchProduct"
                 android:layout_width="300dp"
                 android:layout_height="43dp"
                 android:layout_alignParentStart="true"
@@ -62,6 +62,17 @@
                 app:queryHint="Search..."
                 app:searchHintIcon="@null"
                 app:searchIcon="@drawable/ic_baseline_search_24" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchProductRel">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/productsRecyclerView"/>
         </RelativeLayout>
 
     </RelativeLayout>

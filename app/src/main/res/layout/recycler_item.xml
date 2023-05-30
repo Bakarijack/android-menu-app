@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/card_outline"
+        android:padding="1dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/productRel">
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="250dp"
+            android:background="@drawable/cards_back">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@drawable/imgv1"
+                    android:id="@+id/cardProductsImg"/>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/background_card"
+                android:layout_alignParentBottom="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/headingP"
+                        android:layout_alignParentTop="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Burger"
+                            android:layout_gravity="end"
+                            android:textSize="17sp"
+                            android:id="@+id/recProductName"
+                            android:textStyle="bold"
+                            android:textColor="@color/merigold_orange"
+                            android:fontFamily="sans-serif-light"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@id/headingP"
+                        android:id="@+id/countLin">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="Count"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-light"/>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/countLin"
+                        android:layout_alignParentBottom="true">
+
+                        <TextView
+                            android:id="@+id/recProductCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="sans-serif"
+                            android:text="10"
+                            android:textColor="@color/abbey_black"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/rounded_orange"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/ic_action_add"
+                            android:layout_marginBottom="5dp"
+                            android:id="@+id/recProductAdd"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
