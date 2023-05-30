@@ -12,7 +12,7 @@ public class FoodCategoryDatabaseHelper extends DatabaseHelper{
 
     public boolean isCategoryExist(String categoryN){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from foodcategory where reviewDate = '"+categoryN+"'",null);
+        Cursor cursor = db.rawQuery("select * from foodcategory where categoryName = '"+categoryN+"'",null);
 
         if (cursor.getCount() > 0){
             return true;
@@ -21,7 +21,7 @@ public class FoodCategoryDatabaseHelper extends DatabaseHelper{
         }
     }
 
-    public boolean insertCategory(String categoryN){
+    public boolean isCategoryInserted(String categoryN){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -34,5 +34,18 @@ public class FoodCategoryDatabaseHelper extends DatabaseHelper{
         }else {
             return true;
         }
+    }
+
+    public Cursor getCategoryId(String category){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from foodcategory where categoryName = '"+category+"'",null);
+
+        return cursor;
+    }
+
+    public Cursor getFoodCategories(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from foodcategory ",null);
+        return cursor;
     }
 }
