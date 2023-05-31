@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.waiterapp.R;
 import com.example.waiterapp.adapters.CustomerProductAdapter;
+import com.example.waiterapp.adapters.CustomerQuickFilterProductAdapter;
 import com.example.waiterapp.adapters.CustomerSeasonProductAdapter;
+import com.example.waiterapp.dataclasses.CategoryData;
 import com.example.waiterapp.dataclasses.ProductData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,17 +30,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Menu extends AppCompatActivity {
     private ImageButton menuButton,cartButton;
-    private RecyclerView customerSeasonRecyclerView,customerMainRecyclerView;
+    private RecyclerView customerSeasonRecyclerView,customerMainRecyclerView,quickFilterRecyclerView;
     private TextView viewT;
 
 
+    private List<CategoryData> categoryDataList;
+    private List<String> rawDataList;
     private List<ProductData> productDataList;
     private CustomerProductAdapter customerProductAdapter;
     private CustomerSeasonProductAdapter customerSeasonProductAdapter;
+    private CustomerQuickFilterProductAdapter customerQuickFilterProductAdapter;
 
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
@@ -52,6 +59,7 @@ public class Menu extends AppCompatActivity {
         cartButton = (ImageButton) findViewById(R.id.cartButton);
         customerSeasonRecyclerView = (RecyclerView) findViewById(R.id.customerSeasonRecyclerView);
         customerMainRecyclerView = (RecyclerView) findViewById(R.id.customerMainRecyclerView);
+        quickFilterRecyclerView = (RecyclerView) findViewById(R.id.quickFilterRecyclerView);
         viewT = (TextView) findViewById(R.id.viewT);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(Menu.this,3);
@@ -60,12 +68,20 @@ public class Menu extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Menu.this,LinearLayoutManager.HORIZONTAL,true);
         customerSeasonRecyclerView.setLayoutManager(linearLayoutManager);
 
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(Menu.this, LinearLayoutManager.HORIZONTAL,true);
+        quickFilterRecyclerView.setLayoutManager(linearLayoutManager1);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        categoryDataList = new ArrayList<>();
+        rawDataList = new ArrayList<>();
+        customerQuickFilterProductAdapter = new CustomerQuickFilterProductAdapter(Menu.this,categoryDataList);
+        quickFilterRecyclerView.setAdapter(customerQuickFilterProductAdapter);
 
         productDataList = new ArrayList<>();
         customerProductAdapter = new CustomerProductAdapter(Menu.this,productDataList);
@@ -85,10 +101,19 @@ public class Menu extends AppCompatActivity {
                     ProductData productData = itemSnapshot.getValue(ProductData.class);
                     productData.setKey(itemSnapshot.getKey());
                     productDataList.add(productData);
+                    rawDataList.add(productData.getProductCategory());
                 }
+
+                Set<String> unique = new HashSet<>(rawDataList);
+
+                for (String item: unique){
+                    categoryDataList.add(new CategoryData(item));
+                }
+
 
                 customerProductAdapter.notifyDataSetChanged();
                 customerSeasonProductAdapter.notifyDataSetChanged();
+                customerQuickFilterProductAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
 

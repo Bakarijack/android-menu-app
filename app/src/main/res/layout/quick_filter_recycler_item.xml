@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp"
+    android:layout_marginTop="5dp"
+    android:id="@+id/quickFilRec">
+    <RelativeLayout
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:background="@drawable/search_background">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/burger"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/quickFilRecImg"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fast Foods"
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/smoky_black"
+            android:textStyle="bold"
+            android:textSize="9sp"
+            android:id="@+id/quickFilRecTitle"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
