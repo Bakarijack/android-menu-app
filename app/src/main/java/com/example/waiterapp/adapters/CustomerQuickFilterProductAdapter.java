@@ -39,6 +39,36 @@ public class CustomerQuickFilterProductAdapter extends RecyclerView.Adapter<MyQu
     @Override
     public void onBindViewHolder(@NonNull MyQuickFilterViewHolder holder, int position) {
         holder.quickFilRecTitle.setText(categoryDataList.get(position).getCategoryName());
+
+        switch (categoryDataList.get(position).getCategoryName()){
+            case "Vegetables":
+                holder.quickFilRecImg.setImageResource(R.drawable.imgv1);
+                break;
+            case "Fruits":
+                holder.quickFilRecImg.setImageResource(R.drawable.fruits);
+                break;
+            case "Grains":
+                holder.quickFilRecImg.setImageResource(R.drawable.grains);
+                break;
+            case "Meat and Poultry":
+                holder.quickFilRecImg.setImageResource(R.drawable.meat);
+                break;
+            case "Seafood":
+                holder.quickFilRecImg.setImageResource(R.drawable.seafood);
+                break;
+            case "Dairy foods":
+                holder.quickFilRecImg.setImageResource(R.drawable.dairy);
+                break;
+            case "Eggs":
+                holder.quickFilRecImg.setImageResource(R.drawable.eggs);
+                break;
+            case "Fast foods":
+                holder.quickFilRecImg.setImageResource(R.drawable.burger);
+                break;
+            default:
+                holder.quickFilRecImg.setImageResource(R.drawable.default_f);
+                break;
+        }
     }
 
     @Override
