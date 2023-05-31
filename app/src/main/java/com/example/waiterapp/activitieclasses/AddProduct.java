@@ -156,8 +156,7 @@ public class AddProduct extends AppCompatActivity {
         }
 
         if (fquantity.isEmpty()){
-            Toast.makeText(this, "Please enter food quantity", Toast.LENGTH_SHORT).show();
-            return;
+            fquantity = "0";
         }
 
         if (fdescription.isEmpty()){
