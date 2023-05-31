@@ -1,6 +1,7 @@
 package com.example.waiterapp.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.waiterapp.R;
 import com.example.waiterapp.dataclasses.ProductData;
 
@@ -27,17 +29,22 @@ public class CustomerProductAdapter extends RecyclerView.Adapter<MyCustomerProdu
     @NonNull
     @Override
     public MyCustomerProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_recycler_item,parent,false);
+
+        return new MyCustomerProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyCustomerProductViewHolder holder, int position) {
+        Glide.with(context).load(productDataList.get(position).getProductImageUri()).into(holder.customerRecCardProductsImg);
+        holder.customerRecProductName.setText(productDataList.get(position).getProductName());
+        holder.customerRecProductPrice.setText(productDataList.get(position).getProductPrice());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return productDataList.size();
     }
 }
 

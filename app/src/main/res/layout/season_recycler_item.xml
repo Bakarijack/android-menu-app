@@ -3,11 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
     app:cardCornerRadius="20dp"
-    android:id="@+id/customerRecCard"
-    android:background="@drawable/card_outline">
-
+    android:layout_margin="5dp"
+    android:id="@+id/seasonRecItem">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -19,8 +17,8 @@
         android:id="@+id/customerproductRel">
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="180dp"
+            android:layout_width="90dp"
+            android:layout_height="120dp"
             android:background="@drawable/cards_back">
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -30,16 +28,16 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="135dp"
+                    android:layout_height="75dp"
                     android:src="@drawable/imgv1"
                     android:padding="0dp"
                     android:scaleType="fitXY"
-                    android:id="@+id/customerRecCardProductsImg"/>
+                    android:id="@+id/customerSeasonRecCardProductsImg"/>
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="60dp"
                 android:background="@drawable/background_card"
                 android:layout_alignParentBottom="true">
 
@@ -59,8 +57,8 @@
                             android:layout_height="wrap_content"
                             android:text="burder"
                             android:layout_gravity="end"
-                            android:textSize="17sp"
-                            android:id="@+id/customerRecProductName"
+                            android:textSize="11sp"
+                            android:id="@+id/customerSeasonRecProductName"
                             android:textStyle="bold"
                             android:textColor="@color/merigold_orange"
                             android:fontFamily="sans-serif-light"/>
@@ -83,12 +81,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="Ksh"
                                 android:textColor="@color/merigold_orange"
-                                android:textSize="11sp"/>
+                                android:textSize="10sp"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_below="@id/currencyLin"
-                            android:id="@+id/customerRecProductPrice"
+                            android:id="@+id/customerSeasonRecProductPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
@@ -98,7 +96,7 @@
                             android:fontFamily="sans-serif"
                             android:text="150"
                             android:textColor="@color/abbey_black"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
