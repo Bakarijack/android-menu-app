@@ -86,6 +86,14 @@ public class ItemDetail extends AppCompatActivity {
         String itemTPrice = totalItemPrice.getText().toString();
         String itemN = itemName.getText().toString();
 
+        String itemImage = "";
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null){
+            itemImage = bundle.getString("pImage");
+        }
+
+
         if (Integer.valueOf(itemC) == 0){
             Toast.makeText(this, "Item not added!", Toast.LENGTH_SHORT).show();
             return;
@@ -101,14 +109,14 @@ public class ItemDetail extends AppCompatActivity {
                 }
             }else {
                 //item does not exist
-                if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC))){
+                if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC),itemImage)){
                     Toast.makeText(this, "item inserted in cart 1", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(this, "Failed to insert item in the cart 1", Toast.LENGTH_SHORT).show();
                 }
             }
         }else {
-            if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC))){
+            if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC),itemImage)){
                 Toast.makeText(this, "item inserted in cart 2", Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(this, "Failed to insert item in the cart 2", Toast.LENGTH_SHORT).show();

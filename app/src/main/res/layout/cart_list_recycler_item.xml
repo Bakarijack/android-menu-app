@@ -99,7 +99,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="10dp"
                 android:orientation="vertical">
                 <ImageButton
@@ -107,6 +107,18 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_action_back_delete"
                     android:id="@+id/cartItemDeleteRec"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="burger"
+                    android:id="@+id/cartItemName"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/merigold_orange"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
         </LinearLayout>

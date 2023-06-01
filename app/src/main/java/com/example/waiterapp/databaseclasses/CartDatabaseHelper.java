@@ -4,6 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CartDatabaseHelper extends DatabaseHelper{
     public CartDatabaseHelper(Context context) {
@@ -22,13 +29,32 @@ public class CartDatabaseHelper extends DatabaseHelper{
         }
     }
 
-    public boolean isItemInserted(String cartItemName, String cartItemPrice, int cartItemQuantity){
+
+    private byte[] imageViewToByte(ImageView imageView) {
+        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,80,stream);
+        byte[] bytes = stream.toByteArray();
+
+        return bytes;
+    }
+
+
+
+    public Cursor getAllCartItems(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from cartItem",null);
+        return cursor;
+    }
+
+    public boolean isItemInserted(String cartItemName, String cartItemPrice, int cartItemQuantity,String cartItemImage){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("cartItemName",cartItemName);
         contentValues.put("cartItemPrice",cartItemPrice);
         contentValues.put("cartItemQuantity",cartItemQuantity);
+        contentValues.put("cartItemImage",cartItemImage);
 
         long result = db.insert("cartItem",null,contentValues);
 

@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("create table restaurant (restaurantId INTEGER primary key AUTOINCREMENT,restaurantName TEXT, restaurantEmail TEXT NOT NULL, restaurantPassword TEXT, tableNumber INTEGER default null)");
         sqLiteDatabase.execSQL("create table foodcategory (categoryId INTEGER primary key AUTOINCREMENT,categoryName TEXT)");
         sqLiteDatabase.execSQL("create table products (productId INTEGER primary key AUTOINCREMENT,productName TEXT,productPrice TEXT,productQuantity INTEGER,productCategoty TEXT,productDescription TEXT, productImage blob)");
-        sqLiteDatabase.execSQL("create table cartItem (cartItemId INTEGER primary key AUTOINCREMENT,cartItemName TEXT,cartItemPrice TEXT,cartItemQuantity INTEGER)");
+        sqLiteDatabase.execSQL("create table cartItem (cartItemId INTEGER primary key AUTOINCREMENT,cartItemName TEXT,cartItemPrice TEXT,cartItemQuantity INTEGER,cartItemImage TEXT)");
     }
 
     @Override
