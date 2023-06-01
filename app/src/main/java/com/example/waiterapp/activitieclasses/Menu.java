@@ -21,6 +21,7 @@ import com.example.waiterapp.R;
 import com.example.waiterapp.adapters.CustomerProductAdapter;
 import com.example.waiterapp.adapters.CustomerQuickFilterProductAdapter;
 import com.example.waiterapp.adapters.CustomerSeasonProductAdapter;
+import com.example.waiterapp.databaseclasses.CartDatabaseHelper;
 import com.example.waiterapp.dataclasses.CartItems;
 import com.example.waiterapp.dataclasses.CategoryData;
 import com.example.waiterapp.dataclasses.ProductData;
@@ -39,7 +40,7 @@ import java.util.Set;
 public class Menu extends AppCompatActivity {
     private ImageButton menuButton,cartButton;
     private RecyclerView customerSeasonRecyclerView,customerMainRecyclerView,quickFilterRecyclerView;
-    private TextView viewT;
+    private TextView viewT,cartCount;
 
 
     private List<CategoryData> categoryDataList;
@@ -51,6 +52,8 @@ public class Menu extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
+
+    private CartDatabaseHelper cartDatabaseHelper;
 
 
     @Override
@@ -64,6 +67,13 @@ public class Menu extends AppCompatActivity {
         customerMainRecyclerView = (RecyclerView) findViewById(R.id.customerMainRecyclerView);
         quickFilterRecyclerView = (RecyclerView) findViewById(R.id.quickFilterRecyclerView);
         viewT = (TextView) findViewById(R.id.viewT);
+        cartCount = (TextView) findViewById(R.id.cartCount);
+
+        cartDatabaseHelper = new CartDatabaseHelper(this);
+
+        if (cartDatabaseHelper.isCartContainAnyItem()){
+            cartCount.setText(String.valueOf(cartDatabaseHelper.getCartItemsCount()));
+        }
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(Menu.this,3);
         customerMainRecyclerView.setLayoutManager(gridLayoutManager);

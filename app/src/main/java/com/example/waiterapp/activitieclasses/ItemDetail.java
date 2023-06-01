@@ -83,9 +83,36 @@ public class ItemDetail extends AppCompatActivity {
     public void addItemToOrderList(){
         String itemC = itemCounter.getText().toString().trim();
 
+        String itemTPrice = totalItemPrice.getText().toString();
+        String itemN = itemName.getText().toString();
+
         if (Integer.valueOf(itemC) == 0){
             Toast.makeText(this, "Item not added!", Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if (cartDatabaseHelper.isCartContainAnyItem()){
+            if (cartDatabaseHelper.isItemExistInCart(itemN)){
+                //item exist
+                if (cartDatabaseHelper.updateCartItem(itemN,itemTPrice,Integer.valueOf(itemC))){
+                    Toast.makeText(this, "Item updated in the cart", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(this, "Failed to update the item in the cart", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                //item does not exist
+                if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC))){
+                    Toast.makeText(this, "item inserted in cart 1", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(this, "Failed to insert item in the cart 1", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }else {
+            if (cartDatabaseHelper.isItemInserted(itemN,itemTPrice,Integer.valueOf(itemC))){
+                Toast.makeText(this, "item inserted in cart 2", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "Failed to insert item in the cart 2", Toast.LENGTH_SHORT).show();
+            }
         }
 
 

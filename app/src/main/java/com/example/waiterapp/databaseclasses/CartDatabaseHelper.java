@@ -2,11 +2,24 @@ package com.example.waiterapp.databaseclasses;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class CartDatabaseHelper extends DatabaseHelper{
     public CartDatabaseHelper(Context context) {
         super(context);
+    }
+
+
+    public boolean isCartContainAnyItem(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from cartItem",null);
+
+        if (cursor.getCount() > 0) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public boolean isItemInserted(String cartItemName, String cartItemPrice, int cartItemQuantity){
@@ -51,6 +64,27 @@ public class CartDatabaseHelper extends DatabaseHelper{
         }else {
             return true;
         }
+    }
+
+
+    public int getCartItemsCount(){
+        String countQuery = "select * from cartItem";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+
+    public boolean isItemExistInCart(String cartItemName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from cartItem where cartItemName = ?", new String[] {cartItemName});
+
+        if(cursor.getCount() > 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean updateCartItem(String cartItemName, String cartItemPrice, int cartItemQuantity){
