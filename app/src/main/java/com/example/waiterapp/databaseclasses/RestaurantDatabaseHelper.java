@@ -89,4 +89,20 @@ public class RestaurantDatabaseHelper extends DatabaseHelper{
             return true;
         }
     }
+
+    public int getTableNumber(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from restaurant",null);
+
+        if (cursor.getCount() == 0){
+            return 0;
+        }else {
+            while (cursor.moveToNext()){
+                if (cursor.getCount() == 1){
+                    return cursor.getInt(4);
+                }
+            }
+        }
+        return 0;
+    }
 }

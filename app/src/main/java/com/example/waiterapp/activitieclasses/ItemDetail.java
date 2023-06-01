@@ -14,17 +14,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.waiterapp.R;
+import com.example.waiterapp.databaseclasses.CartDatabaseHelper;
+import com.example.waiterapp.dataclasses.CartItems;
+import com.example.waiterapp.helpers.SharedList;
+
+import java.util.ArrayList;
 
 public class ItemDetail extends AppCompatActivity {
     private ImageView itemImg;
     private Button subButton,addButton,orderListLaunchButton;
-    private TextView itemCounter,itemName,itemDesc,itemPrice;
+    private TextView itemCounter,itemName,itemDesc,itemPrice,totalItemPrice;
     private ImageButton detailBackButton;
+    private ArrayList<CartItems> cartItemsArrayList;
+
+    private CartDatabaseHelper cartDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
+
+        cartItemsArrayList = new ArrayList<>();
+
+        cartDatabaseHelper = new CartDatabaseHelper(this);
 
         itemImg = (ImageView) findViewById(R.id.itemImg);
         subButton = (Button) findViewById(R.id.subButton);
@@ -34,6 +46,7 @@ public class ItemDetail extends AppCompatActivity {
         itemName = (TextView) findViewById(R.id.itemName);
         itemDesc = (TextView) findViewById(R.id.itemDesc);
         itemPrice = (TextView) findViewById(R.id.itemPrice);
+        totalItemPrice = (TextView) findViewById(R.id.totalItemPrice);
         detailBackButton = (ImageButton) findViewById(R.id.detailBackButton);
 
         Bundle bundle = getIntent().getExtras();
@@ -48,6 +61,7 @@ public class ItemDetail extends AppCompatActivity {
 
         if (savedInstanceState != null){
             itemCounter.setText(savedInstanceState.getString("itemCounter"));
+            totalItemPrice.setText(savedInstanceState.getString("totalCost"));
         }
 
         orderListLaunchButton.setOnClickListener(new View.OnClickListener() {
@@ -73,25 +87,34 @@ public class ItemDetail extends AppCompatActivity {
             Toast.makeText(this, "Item not added!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("itemCounter",itemCounter.getText().toString().trim());
+        outState.putString("totalCost",totalItemPrice.getText().toString().trim());
     }
 
     public void incrementCounter(View view){
         int counter = Integer.valueOf(itemCounter.getText().toString());
+        int itemP = Integer.valueOf(itemPrice.getText().toString());
+        int totalPrice = Integer.valueOf(totalItemPrice.getText().toString());
         switch (view.getId()){
             case R.id.addButton:
                 counter++;
+                totalPrice += itemP;
                 itemCounter.setText(String.valueOf(counter));
+                totalItemPrice.setText(String.valueOf(totalPrice));
                 break;
             case R.id.subButton:
-                if (counter != 1){
+                if (counter != 0){
                     counter--;
+                    totalPrice -= itemP;
                     itemCounter.setText(String.valueOf(counter));
+                    totalItemPrice.setText(String.valueOf(totalPrice));
                     break;
                 }
         }

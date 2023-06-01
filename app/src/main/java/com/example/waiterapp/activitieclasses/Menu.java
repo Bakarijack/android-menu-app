@@ -21,8 +21,10 @@ import com.example.waiterapp.R;
 import com.example.waiterapp.adapters.CustomerProductAdapter;
 import com.example.waiterapp.adapters.CustomerQuickFilterProductAdapter;
 import com.example.waiterapp.adapters.CustomerSeasonProductAdapter;
+import com.example.waiterapp.dataclasses.CartItems;
 import com.example.waiterapp.dataclasses.CategoryData;
 import com.example.waiterapp.dataclasses.ProductData;
+import com.example.waiterapp.helpers.SharedList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +51,7 @@ public class Menu extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
