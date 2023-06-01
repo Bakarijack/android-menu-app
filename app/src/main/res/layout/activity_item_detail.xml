@@ -153,7 +153,7 @@
                     android:background="@drawable/go_to_order_background"
                     android:drawableLeft="@drawable/ic_action_cart"
                     android:paddingLeft="15dp"
-                    android:text="Go to Cart"
+                    android:text="Add to order"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
@@ -188,7 +188,7 @@
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="30dp"
-                android:text="1"
+                android:text="0"
                 android:textColor="@color/smoky_black"
                 android:textSize="18sp"
                 android:textAlignment="center"

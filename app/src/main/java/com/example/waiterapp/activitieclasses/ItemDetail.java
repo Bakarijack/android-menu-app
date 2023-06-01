@@ -1,5 +1,6 @@
 package com.example.waiterapp.activitieclasses;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.waiterapp.R;
@@ -44,10 +46,14 @@ public class ItemDetail extends AppCompatActivity {
 
         }
 
+        if (savedInstanceState != null){
+            itemCounter.setText(savedInstanceState.getString("itemCounter"));
+        }
+
         orderListLaunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //pending
+                addItemToOrderList();
             }
         });
 
@@ -58,7 +64,21 @@ public class ItemDetail extends AppCompatActivity {
             }
         });
 
+    }
 
+    public void addItemToOrderList(){
+        String itemC = itemCounter.getText().toString().trim();
+
+        if (Integer.valueOf(itemC) == 0){
+            Toast.makeText(this, "Item not added!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("itemCounter",itemCounter.getText().toString().trim());
     }
 
     public void incrementCounter(View view){
