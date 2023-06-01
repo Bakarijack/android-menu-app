@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.waiterapp.R;
 import com.example.waiterapp.adapters.CartItemsAdapter;
@@ -20,12 +22,15 @@ import java.util.List;
 
 public class OrderItemsList extends AppCompatActivity {
 
-    private ImageButton menuLaunchButton;
+    private ImageButton menuLaunchButton,deleteOrdersButton;
     private RecyclerView orderListRecyclerView;
+
+    private TextView subtotalPrice,discountAmount,totalAmount;
 
     private CartDatabaseHelper cartDatabaseHelper;
     private List<CartItems> cartItemsList;
     private CartItemsAdapter cartItemsAdapter;
+    private List<String> priceList;
 
 
     @Override
@@ -35,6 +40,13 @@ public class OrderItemsList extends AppCompatActivity {
 
         menuLaunchButton = (ImageButton) findViewById(R.id.menuLaunchButton);
         orderListRecyclerView = (RecyclerView) findViewById(R.id.orderListRecyclerView);
+        deleteOrdersButton = (ImageButton) findViewById(R.id.deleteOrdersButton);
+
+        subtotalPrice = (TextView) findViewById(R.id.subtotalPrice);
+        discountAmount = (TextView) findViewById(R.id.discountAmount);
+        totalAmount = (TextView) findViewById(R.id.totalAmount);
+
+        priceList = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderItemsList.this);
         orderListRecyclerView.setLayoutManager(linearLayoutManager);
@@ -56,6 +68,22 @@ public class OrderItemsList extends AppCompatActivity {
                 handleBackToManuAction();
             }
         });
+
+        deleteOrdersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteOrder();
+            }
+        });
+    }
+    
+    public  void deleteOrder(){
+        if (cartDatabaseHelper.deleteAllCartItems()){
+            Toast.makeText(this, "Cart items successfully deleted", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(OrderItemsList.this,Menu.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void handleBackToManuAction(){
@@ -77,8 +105,17 @@ public class OrderItemsList extends AppCompatActivity {
                         cursor.getInt(3),
                         cursor.getString(4)
                 ));
+                priceList.add(cursor.getString(2));
             }
         }
+        Double total = 0.0;
+        for (String item: priceList){
+            total += Double.valueOf(item);
+        }
+        subtotalPrice.setText(String.valueOf(total));
+        Double discount = Double.valueOf(discountAmount.getText().toString());
+        Double totalA = total - discount;
+        totalAmount.setText(String.valueOf(totalA));
         cartItemsAdapter.notifyDataSetChanged();
     }
 }

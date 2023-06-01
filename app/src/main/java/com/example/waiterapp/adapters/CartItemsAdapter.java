@@ -1,6 +1,7 @@
 package com.example.waiterapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.waiterapp.R;
+import com.example.waiterapp.activitieclasses.OrderItemsList;
+import com.example.waiterapp.databaseclasses.CartDatabaseHelper;
 import com.example.waiterapp.dataclasses.CartItems;
 
 import java.util.List;
@@ -25,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CartItemsAdapter extends RecyclerView.Adapter<MyCartItemsViewHolder> {
     private Context context;
     private List<CartItems> cartItemsList;
+    private CartDatabaseHelper cartDatabaseHelper;
 
 
     public CartItemsAdapter(Context context, List<CartItems> cartItemsList) {
@@ -54,6 +59,46 @@ public class CartItemsAdapter extends RecyclerView.Adapter<MyCartItemsViewHolder
         Glide.with(context).load(cartItemsList.get(position).getpImage()).into(holder.cartItemImageRec);
         holder.itemTotalPriceRec.setText(cartItemsList.get(position).getpPrice());
         holder.cartItemName.setText(cartItemsList.get(position).getpName());
+
+        holder.cartItemDeleteRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartDatabaseHelper = new CartDatabaseHelper(context);
+                cartItemsList.remove(holder.getAdapterPosition());
+                if (cartDatabaseHelper.deleteCartItem(cartItemsList.get(holder.getAdapterPosition()).getpName())){
+                    Toast.makeText(context, "Item successfully removed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        holder.addBtnRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int itemQ = cartItemsList.get(holder.getAdapterPosition()).getpQuantity() + 1;
+                double tPrice = Double.valueOf(cartItemsList.get(holder.getAdapterPosition()).getpPrice()) + price;
+
+                if (cartDatabaseHelper.updateCartItem(cartItemsList.get(holder.getAdapterPosition()).getpName(),String.valueOf(tPrice),itemQ)){
+                    holder.itemQuantityRec.setText(String.valueOf(itemQ));
+                    holder.itemTotalPriceRec.setText(String.valueOf(tPrice));
+                }
+            }
+        });
+
+        holder.subBtnRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cartItemsList.get(holder.getAdapterPosition()).getpQuantity() > 0){
+                    int itemQ = cartItemsList.get(holder.getAdapterPosition()).getpQuantity() - 1;
+                    double tPrice = Double.valueOf(cartItemsList.get(holder.getAdapterPosition()).getpPrice()) - price;
+
+                    if (cartDatabaseHelper.updateCartItem(cartItemsList.get(holder.getAdapterPosition()).getpName(),String.valueOf(tPrice),itemQ)){
+                        holder.itemQuantityRec.setText(String.valueOf(itemQ));
+                        holder.itemTotalPriceRec.setText(String.valueOf(tPrice));
+                    }
+                }
+
+            }
+        });
     }
 
     @Override
