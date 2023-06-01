@@ -82,11 +82,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
-                            android:paddingLeft="10dp"
+                            android:paddingLeft="15dp"
                             android:fontFamily="sans-serif-light"
                             android:drawableLeft="@drawable/ic_action_email"
                             android:singleLine="true"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:id="@+id/loginResEmail"
                             android:background="@drawable/rounde_outline"
                             />
@@ -101,6 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Restaurant Password"
+                            android:id="@+id/viewV"
                             android:textColor="@color/abbey_black"
                             android:fontFamily="sans-serif-light"
                             android:textSize="12sp"/>
@@ -108,8 +109,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
-                            android:paddingLeft="10dp"
-                            android:textSize="18sp"
+                            android:paddingLeft="15dp"
+                            android:textSize="15sp"
                             android:fontFamily="sans-serif-light"
                             android:drawableLeft="@drawable/ic_action_key"
                             android:singleLine="true"
@@ -449,33 +450,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="end">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tableNoSkipButton"
-                            style="?android:borderlessButtonStyle"
-                            android:textAllCaps="false"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/abbey_black"
-                            android:text="Skip"/>
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
-
-
 
         </RelativeLayout>
 

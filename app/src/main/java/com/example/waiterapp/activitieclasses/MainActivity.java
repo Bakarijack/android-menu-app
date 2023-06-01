@@ -14,27 +14,41 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.waiterapp.R;
 import com.example.waiterapp.databaseclasses.RestaurantDatabaseHelper;
+import com.example.waiterapp.dataclasses.ProductData;
 import com.example.waiterapp.dataclasses.RestaurantData;
 import com.example.waiterapp.helpers.AESCrypt;
 import com.example.waiterapp.helpers.EmailVerify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     // views ana viewGroup
     private RelativeLayout spinnerRel, loginRel,registerRel,tableNoRel;
     private Button loginButton, registerLaunchButton, registerButton,tableNoSkipButton, loginLaunchButton,menuLaunchButton;
-    private EditText registerResName,registerResEmail,registerResPassword,registerConfResPassword;
-
+    private EditText registerResName,registerResEmail,registerResPassword,registerConfResPassword,loginResEmail,loginResPassword,tableNumber;
+    private TextView viewV;
     // Database
     private RestaurantDatabaseHelper restaurantDatabaseHelper;
+
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListener;
+
+    private List<RestaurantData> restaurantDataList;
 
     private Handler handler = new Handler();
 
@@ -60,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //get the action bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getSupportActionBar().hide();
         //create a full screen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -76,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         registerLaunchButton = (Button) findViewById(R.id.registerLaunchButton);
         registerButton = (Button) findViewById(R.id.registerButton);
         loginLaunchButton = (Button) findViewById(R.id.loginLaunchButton);
-        tableNoSkipButton = (Button) findViewById(R.id.tableNoSkipButton);
         menuLaunchButton = (Button) findViewById(R.id.menuLaunchButton);
 
         registerResName = (EditText) findViewById(R.id.registerResName);
@@ -84,10 +97,18 @@ public class MainActivity extends AppCompatActivity {
         registerResPassword = (EditText) findViewById(R.id.registerResPassword);
         registerConfResPassword = (EditText) findViewById(R.id.registerConfResPassword);
 
+        tableNumber = (EditText) findViewById(R.id.tableNumber);
+
+        loginResEmail = (EditText) findViewById(R.id.loginResEmail);
+        loginResPassword = (EditText) findViewById(R.id.loginResPassword);
+
+        viewV = (TextView) findViewById(R.id.viewV);
         restaurantDatabaseHelper = new RestaurantDatabaseHelper(MainActivity.this);
 
         if (restaurantDatabaseHelper.isAnyRestaurantExist()){
-            launchMenuActivity();
+            if (restaurantDatabaseHelper.isTableNumberSet()){
+                launchMenuActivity();
+            }
         }
 
         //show login
@@ -96,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //pending
+                loginUser();
             }
         });
 
@@ -121,19 +142,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tableNoSkipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchMenuActivity();
-            }
-        });
-
         menuLaunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchMenuActivity();
+                setTableNumber();
             }
         });
+    }
+
+    public void setTableNumber(){
+        String tableN = tableNumber.getText().toString().trim();
+
+        if (tableN.isEmpty()){
+            Toast.makeText(this, "Please enter tha table number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            int tN = Integer.valueOf(tableN);
+
+            if (tN == 0){
+                Toast.makeText(this, "Table Number cannot be zero", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this, "Table Number cannot be decimal number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (restaurantDatabaseHelper.updateTableNumber(loginResEmail.getText().toString().trim(),Integer.valueOf(tableN))){
+            Toast.makeText(this, "table number updated !", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(MainActivity.this,Menu.class);
+            intent.putExtra("tableNumber", tableN);
+            startActivity(intent);
+        }else {
+            Toast.makeText(this, "Failed to update table number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
     }
 
     public void launchRegisterLayout(){
@@ -151,6 +198,93 @@ public class MainActivity extends AppCompatActivity {
         startActivity(menuIntent);
         finish();
     }
+
+    public void launchTableNumberLayout(){
+        loginRel.setVisibility(View.INVISIBLE);
+        tableNoRel.setVisibility(View.VISIBLE);
+    }
+
+
+    public void loginUser(){
+        String lEmail = loginResEmail.getText().toString().trim();
+        String lPassword = loginResPassword.getText().toString().trim();
+
+        if (lEmail.isEmpty()){
+            Toast.makeText(this, "Please enter the email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (lPassword.isEmpty()){
+            viewV.setText(lEmail);
+            Toast.makeText(this, "Please enter the password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!EmailVerify.isEmailValid(lEmail)){
+            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_layout);
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+
+        restaurantDataList = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+        dialog.show();
+
+        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                restaurantDataList.clear();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()){
+                    RestaurantData restaurantData = itemSnapshot.child("info").getValue(RestaurantData.class);
+
+                    if (restaurantData.getRestaurantEmail().equals(lEmail) && restaurantData.getRestaurantPassword().equals(lPassword)){
+                        restaurantDataList.add(restaurantData);
+                    }
+                }
+
+                if (restaurantDataList.size() > 0){
+                    Toast.makeText(MainActivity.this, "User exist", Toast.LENGTH_SHORT).show();
+
+                    if (restaurantDatabaseHelper.isAnyRestaurantExist()){
+                        launchTableNumberLayout();
+
+                        //update database
+                        if (restaurantDatabaseHelper.updateRestaurantData(restaurantDataList.get(0).getRestaurantName(),lEmail,lPassword)){
+                            Toast.makeText(MainActivity.this, "db updated", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this, "failed to update db", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        //insert data in db
+                        if (restaurantDatabaseHelper.isRestaurantDataInserted(restaurantDataList.get(0).getRestaurantName(),lEmail,lPassword)){
+                            Toast.makeText(MainActivity.this, "Data inserted id db", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this, "Failed to insert data in db", Toast.LENGTH_SHORT).show();
+                        }
+
+                        launchTableNumberLayout();
+                    }
+                }else {
+                    Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+                }
+
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
 
     public void registerRestaurant(){
         String pass = registerResPassword.getText().toString().trim();
@@ -224,8 +358,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Failed to save in SQLite db", Toast.LENGTH_SHORT).show();
                             }
                             showLoginAfterRegistration();
-
-                            finish();
+                            
                             dialog.dismiss();
                         }
                     }

@@ -2,9 +2,11 @@ package com.example.waiterapp.activitieclasses;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ public class ItemDetail extends AppCompatActivity {
     private ImageView itemImg;
     private Button subButton,addButton,orderListLaunchButton;
     private TextView itemCounter,itemName,itemDesc,itemPrice;
+    private ImageButton detailBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class ItemDetail extends AppCompatActivity {
         itemName = (TextView) findViewById(R.id.itemName);
         itemDesc = (TextView) findViewById(R.id.itemDesc);
         itemPrice = (TextView) findViewById(R.id.itemPrice);
+        detailBackButton = (ImageButton) findViewById(R.id.detailBackButton);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -44,6 +48,13 @@ public class ItemDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //pending
+            }
+        });
+
+        detailBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchMenuFromProductDetail();
             }
         });
 
@@ -64,5 +75,11 @@ public class ItemDetail extends AppCompatActivity {
                     break;
                 }
         }
+    }
+
+    public  void launchMenuFromProductDetail(){
+        Intent intent = new Intent(ItemDetail.this, Menu.class);
+        startActivity(intent);
+        finish();
     }
 }
